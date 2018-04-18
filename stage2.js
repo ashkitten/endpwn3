@@ -31,12 +31,12 @@
     document.addEventListener('ep-ready', () => {
 
         // enable experiments
-        wc.findFunc('isDeveloper')[1].exports.__defineGetter__('isDeveloper', () => true);
+        $api.util.findFuncExports('isDeveloper').__defineGetter__('isDeveloper', () => true);
 
         // disable that obnoxious warning about not pasting shit in the console
-        wc.findFunc("SELF_XSS_HEADER")[1].exports.consoleWarning = e => { };
+        $api.util.findFuncExports('consoleWarning').consoleWarning = e => { };
 
-        // goodies for bootsy and dr1ft
+        // goodies for important people
         $api.util.wrapAfter(
             "wc.findCache('getUser')[0].exports.getUser",
 
