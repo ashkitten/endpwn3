@@ -43,7 +43,7 @@
                 if (!fs.existsSync(data + '/DONTUPDATE')) {
 
                     // grab EPAPI from master
-                    fetch('https://endpwn.github.io/epapi.js?_=' + Date.now())
+                    fetch('https://endpwn.github.io/epapi/epapi.js?_=' + Date.now())
                         .then(r => r.text())
                         .then(epapi => {
                             fs.writeFileSync(data + '/epapi.js', epapi);
