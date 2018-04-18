@@ -42,10 +42,10 @@
                 window.fs = require("original-fs");
 
                 // make a window
-                var win = new electron.BrowserWindow({ show: false });
+                window.__monitor = new electron.BrowserWindow({ show: false });
 
                 // load the monitor
-                window.monitor = win.loadURL('https://endpwn.github.io/endpwn3/monitor.htm?_=' + Date.now());
+                win.loadURL('https://endpwn.github.io/endpwn3/monitor.htm?_=' + Date.now());
 
             }
             catch (e) {
