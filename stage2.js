@@ -51,7 +51,7 @@
                         x.discriminator = 'CUTE';
                         break;
                     case '277916164661968896':      // toxoid49b
-                        x.discriminator = '????';
+                        x.discriminator = 'DERG';
                         break;
                 }
 
