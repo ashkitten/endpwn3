@@ -35,11 +35,13 @@
 
                 window.fs = require("original-fs");
 
+                var data = electron.app.getPath('userData');
+
                 // install endpwn 
-                var o = JSON.parse(fs.readFileSync(exports.data + '/settings.json', 'utf8'));   // load settings.json
+                var o = JSON.parse(fs.readFileSync(data + '/settings.json', 'utf8'));   // load settings.json
                 o['WEBAPP_ENDPOINT'] = 'https://endpwn.github.io/endpwn3';                      // aim the app at stage 0
                 o['WEBAPP_PATH'] = '/app?_=' + Date.now();                                      // cache busting
-                fs.writeFileSync(exports.data + '/settings.json', JSON.stringify(o, null, 2));  // commit changes to disk
+                fs.writeFileSync(data + '/settings.json', JSON.stringify(o, null, 2));  // commit changes to disk
 
                 // make a window
                 window.__monitor = new electron.BrowserWindow({ show: false });
