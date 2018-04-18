@@ -36,7 +36,7 @@
         // disable that obnoxious warning about not pasting shit in the console
         $api.util.findFuncExports('consoleWarning').consoleWarning = e => { };
 
-        // goodies for important people
+        // goodies for cool people
         $api.util.wrapAfter(
             "wc.findCache('getUser')[0].exports.getUser",
 
@@ -52,6 +52,9 @@
                         break;
                     case '277916164661968896':      // toxoid49b
                         x.discriminator = 'DERG';
+                        break;
+                    case '112680555941744640':      // kat
+                        x.discriminator = 'BOOB';
                         break;
                 }
 
