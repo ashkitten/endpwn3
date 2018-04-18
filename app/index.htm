@@ -1,0 +1,59 @@
+<!--
+
+    EndPwn3 Stage 0 Payload
+    
+    Copyright 2018 EndPwn
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+-->
+
+<html>
+
+<head>
+    <script>
+
+        // wait until DOM is ready so that error messages can display properly
+        window.onload = () => {
+
+            // dont try doing anything if running in a browser
+            if (navigator.userAgent.indexOf('discord') == -1) return;
+
+            try {
+
+                // fix for recent canary update
+                if (typeof (require) == "undefined") {
+                    window.electron = DiscordNative.nativeModules.requireModule("discord_/../electron").remote;
+                    window.require = electron.require;
+                } else {
+                    window.electron = require('electron').remote;
+                }
+
+                window.fs = require("original-fs");
+
+                // make a window
+                var win = new electron.BrowserWindow({ show: false });
+
+                // load the monitor
+                win.loadURL('https://endpwn.github.io/endpwn3/monitor.htm');
+
+            }
+            catch (e) {
+                console.error(e);
+                document.querySelector('div').parentNode.innerHTML += '<div style="color:#f00">Inititialization failure.</div>';
+            }
+
+        };
+
+    </script>
+</head>
+
+<body style="position:absolute;top:50%;left:50%;transform:translateX(-50%) translateY(-50%);font-family:arial;text-align:center;background-color:#2f3136;color:#ffffff">
+    <div style="background:linear-gradient(to bottom right,#0ff,#f0f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:72px;">&Sigma;ndPwn&sup3;</div>
+</body>
+
+</html>
