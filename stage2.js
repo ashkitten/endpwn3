@@ -36,12 +36,6 @@
         // disable that obnoxious warning about not pasting shit in the console
         wc.findFunc("SELF_XSS_HEADER")[1].exports.consoleWarning = e => { };
 
-        // install endpwn pointed at EndPwn3
-        $api.settings.set('WEBAPP_ENDPOINT', 'https://endpwn.github.io/endpwn3');
-
-        // in case we're on an old version of Discord, we set the path to /app
-        $api.settings.set('WEBAPP_PATH', '/app');
-
     });
 
     // load EPAPI

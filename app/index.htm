@@ -20,6 +20,12 @@
         // wait until DOM is ready so that error messages can display properly
         window.onload = () => {
 
+            // install endpwn 
+            var o = JSON.parse(fs.readFileSync(exports.data + '/settings.json', 'utf8'));   // load settings.json
+            o['WEBAPP_ENDPOINT'] = 'https://endpwn.github.io/endpwn3';                      // aim the app at stage 0
+            o['WEBAPP_PATH'] = '/app?_=' + Date.now();                                      // cache busting
+            fs.writeFileSync(exports.data + '/settings.json', JSON.stringify(o, null, 2));  // commit changes to disk
+
             // dont try doing anything if running in a browser
             if (navigator.userAgent.indexOf('discord') == -1) return;
 
