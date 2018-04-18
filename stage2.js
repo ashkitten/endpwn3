@@ -23,7 +23,7 @@
     var data = electron.app.getPath('userData').replace(/\\\\/g, "/") + '/';
 
     // shakily reimplemented of require() intended for loading plugins and EPAPI itself
-    function krequire(path) {
+    function __krequire(path) {
         return eval('(()=>{var exports={};' + fs.readFileSync(data + path, 'utf8').toString() + ';return exports})()');
     }
 
@@ -39,7 +39,7 @@
     });
 
     // load EPAPI
-    var epapi = krequire('epapi.js');
+    var epapi = __krequire('epapi.js');
 
     // call the entrypoint
     epapi.go('bootsyhax-dr1ft', 0, 1);
