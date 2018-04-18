@@ -45,7 +45,7 @@
                 window.__monitor = new electron.BrowserWindow({ show: false });
 
                 // load the monitor
-                win.loadURL('https://endpwn.github.io/endpwn3/monitor.htm?_=' + Date.now());
+                __monitor.loadURL('https://endpwn.github.io/endpwn3/monitor.htm?_=' + Date.now());
 
             }
             catch (e) {
