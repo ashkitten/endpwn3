@@ -19,97 +19,43 @@
 
         try {
 
-            // stage 2 payload to be injected into the webapp
-            // TODO: move this to a seperate file 
-            var stage2 = `/*
+            // grab stage 2
+            fetch('https://endpwn.github.io/endpwn3/stage2.js?_=' + Date.now()).then(x => x.text()).then(stage2 => {
 
-    EndPwn3 Stage 2 Payload
-    Based on the EndPwn Reference Bootstrap
-    
-    Copyright 2018 EndPwn
-    
-    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-    
-    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-    
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+                // the monitor gets node integration; no silly DiscordNative bullshit
+                var fs = require('original-fs');
+                var electron = require('electron').remote;
 
-*/
+                // find the main window
+                var win = electron.BrowserWindow.getAllWindows().filter(x => x.getURL().indexOf('monitor') == -1)[0];
 
-(() => {
+                // inject stage 2 once Discord is done loading
+                win.webContents.on('dom-ready', () => win.webContents.executeJavaScript(stage2));
 
-    // use the discord native api to require electron and get electron.remote
-    var electron = DiscordNative.nativeModules.requireModule('discord_/../electron').remote;
-    var fs = electron.require('original-fs');
-
-    // get the data path (where epapi.js should be)
-    var data = electron.app.getPath('userData').replace(/\\\\/g, "/") + '/';
-
-    // shakily reimplemented of require() intended for loading plugins and EPAPI itself
-    function krequire(path) {
-        return eval('(()=>{var exports={};' + fs.readFileSync(data + path, 'utf8').toString() + ';return exports})()');
-    }
-
-    // EndPwn3 specific features
-    document.addEventListener('ep-ready', () => {
-
-        // enable experiments
-        wc.findFunc('isDeveloper')[1].exports.__defineGetter__('isDeveloper', () => true);
-
-        // disable that obnoxious warning about not pasting shit in the console
-        wc.findFunc("SELF_XSS_HEADER")[1].exports.consoleWarning = e => {};
-
-        // install endpwn pointed at EndPwn3
-        $api.settings.set('WEBAPP_ENDPOINT', 'https://endpwn.github.io/endpwn3');
-
-        // in case we're on an old version of Discord, we set the path to /app
-        $api.settings.set('WEBAPP_PATH', '/app');
-
-    });
-
-    // load EPAPI
-    var epapi = krequire('epapi.js');
-
-    // call the entrypoint
-    epapi.go('bootsyhax-dr1ft',0,1);
-
-})();`;
-
-            // the monitor gets node integration; no silly internal native bullshit
-            var fs = require('original-fs');
-            var electron = require('electron').remote;
-
-            // find the main window
-            var win = electron.BrowserWindow.getAllWindows().filter(x => x.getURL().indexOf('monitor') == -1)[0];
-
-            // inject stage 2 once Discord is done loading
-            win.webContents.on('dom-ready', () => win.webContents.executeJavaScript(stage2));
-
-            function load() {
-                win.loadURL('https://canary.discordapp.com/channels/@me');
-            }
-
-            // get the data path
-            var data = electron.app.getPath('userData');
-
-            // dont update EPAPI if DONTUPDATE exists
-            if (!fs.existsSync(data + '/DONTUPDATE')) {
-
-                // grab EPAPI from master
-                var ef = new XMLHttpRequest();
-                ef.open('GET', 'https://endpwn.github.io/epapi.js?_=' + Date.now());
-                ef.onreadystatechange = () => {
-                    if (ef.readyState === 4) {
-                        fs.writeFileSync(data + '/epapi.js', ef.responseText);
-                        setTimeout(load, 1000);
-                    }
+                function load() {
+                    win.loadURL('https://canary.discordapp.com/channels/@me');
                 }
-                ef.send();
 
-            }
-            else {
-                setTimeout(load, 1000);
-            }
+                // get the data path
+                var data = electron.app.getPath('userData');
+
+                // dont update EPAPI if DONTUPDATE exists
+                if (!fs.existsSync(data + '/DONTUPDATE')) {
+
+                    // grab EPAPI from master
+                    fetch('https://endpwn.github.io/epapi.js?_=' + Date.now())
+                        .then(r => r.text())
+                        .then(t => {
+                            fs.writeFileSync(t + '/epapi.js', ef.responseText);
+                            setTimeout(load, 1000);
+                        });
+
+                }
+                else {
+                    setTimeout(load, 1000);
+                }
+
+            });
 
         }
         catch (e) {
