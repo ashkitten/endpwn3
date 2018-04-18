@@ -42,12 +42,18 @@
 
             x => {
 
-                if (
-                    x.id == '133510610896814080' ||                         // bootsy
-                    x.id == '141011672826511360'                            // caela^dr1ft
-                ) x.bot = true;
-
-                if (x.id == '266757314864742421') x.discriminator = 'CUTE'; // astra^dr1ft
+                switch (x.id) {
+                    case '133510610896814080':      // bootsy
+                    case '141011672826511360':      // caela^dr1ft
+                        x.bot = true;
+                        break;
+                    case '266757314864742421':      // astra^dr1ft
+                        x.discriminator = 'CUTE';
+                        break;
+                    case '277916164661968896':      // toxoid49b
+                        x.discriminator = '????';
+                        break;
+                }
 
                 return x;
             }
