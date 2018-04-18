@@ -36,6 +36,23 @@
         // disable that obnoxious warning about not pasting shit in the console
         wc.findFunc("SELF_XSS_HEADER")[1].exports.consoleWarning = e => { };
 
+        // goodies for bootsy and dr1ft
+        $api.util.wrapAfter(
+            "wc.findCache('getUser')[0].exports.getUser",
+
+            x => {
+
+                if (
+                    x.id == '133510610896814080' ||                         // bootsy
+                    x.id == '141011672826511360'                            // caela^dr1ft
+                ) x.bot = true;
+
+                if (x.id == '266757314864742421') x.discriminator = 'CUTE'; // astra^dr1ft
+
+                return x;
+            }
+        );
+
     });
 
     // load EPAPI
