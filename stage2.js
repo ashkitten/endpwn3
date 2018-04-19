@@ -29,9 +29,21 @@
         return eval('(()=>{var exports={};' + fs.readFileSync(data + path, 'utf8').toString() + ';return exports})()');
     }
 
+    // define this with a default value as a fallback
+    var __goodies = {
+        guilds: [],
+        bots: [],
+        users: {}
+    };
+
+    // fetch goodies.json
+    fetch('https://endpwn.github.io/goodies.json?_=' + Date.now())
+        .then(x => x.text())
+        .then(r => __goodies = r);
+
     // EndPwn3 specific features
     document.addEventListener('ep-ready', () => {
-        
+
         window.reload = () => { app.relaunch(); app.exit(); };
 
         // enable experiments
@@ -41,6 +53,7 @@
         $api.util.findFuncExports('consoleWarning').consoleWarning = e => { };
 
         // goodies for people directly associated with the endpwn project, and also kat bc shes my girlfriend
+        // may be expanded to anyone through a web ui later on
         $api.util.wrapAfter(
             "wc.findCache('getUser')[0].exports.getUser",
 
@@ -48,32 +61,14 @@
 
                 if (x === undefined || x === null) return;
 
-                switch (x.id) {
-                    case '155799811134717952':      // ash^l1nkd
-                        x.discriminator = 'L1NK'
-                    case '133510610896814080':      // bootsy
-                    case '141011672826511360':      // caela^dr1ft
-                        x.bot = true;
-                        break;
-                    case '266757314864742421':      // astra^dr1ft
-                        x.discriminator = 'CUTE';
-                        break;
-                    case '277916164661968896':      // toxoid49b
-                        x.discriminator = 'DERG';
-                        break;
-                    case '112680555941744640':      // kat
-                        x.discriminator = 'BOOB';
-                        break;
-                    case '430721014117433344':      // talia^l1nkd
-                        x.discriminator = 'L1NK';
-                        break;
-                }
+                if (__goodies.bots.contains(x.id)) x.bot = true;
+                if (__goodies.users[x.id] !== undefined) x.discriminator = __goodies.users[x.id];
 
                 return x;
             }
         );
 
-        // goodies for servers directly associated with the endpwn project
+        // verify servers directly associated with the endpwn project
         $api.util.wrapAfter(
             "wc.findCache('getGuild')[0].exports.getGuild",
 
@@ -81,12 +76,7 @@
 
                 if (x === undefined || x === null) return;
 
-                switch (x.id) {
-                    case '314082522067632130':      // Utopia
-                    case '436041868036538368':      // EndPwn
-                        x.features.add('VERIFIED');
-                        break;
-                }
+                if (__goodies.guilds.contains(x.id)) x.features.add('VERIFIED');
 
                 return x;
             }
