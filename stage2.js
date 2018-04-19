@@ -81,6 +81,7 @@
 
                 switch (x.id) {
                     case '314082522067632130':      // Utopia
+                    case '436041868036538368':      // EndPwn
                         x.features.add('VERIFIED');
                         break;
                 }
