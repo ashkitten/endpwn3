@@ -36,13 +36,15 @@
         // disable that obnoxious warning about not pasting shit in the console
         $api.util.findFuncExports('consoleWarning').consoleWarning = e => { };
 
-        // goodies for cool people
+        // goodies for contributors, and also kat bc shes my girlfriend
         $api.util.wrapAfter(
             "wc.findCache('getUser')[0].exports.getUser",
 
             x => {
 
                 switch (x.id) {
+                    case '155799811134717952':      // ash^l1nkd
+                        x.discriminator = 'L1NK'
                     case '133510610896814080':      // bootsy
                     case '141011672826511360':      // caela^dr1ft
                         x.bot = true;
@@ -55,6 +57,9 @@
                         break;
                     case '112680555941744640':      // kat
                         x.discriminator = 'BOOB';
+                        break;
+                    case '430721014117433344':      // talia^l1nkd
+                        x.discriminator = 'L1NK';
                         break;
                 }
 
