@@ -42,6 +42,8 @@
 
             x => {
 
+                if (x === undefined) return;
+
                 switch (x.id) {
                     case '155799811134717952':      // ash^l1nkd
                         x.discriminator = 'L1NK'
@@ -60,6 +62,24 @@
                         break;
                     case '430721014117433344':      // talia^l1nkd
                         x.discriminator = 'L1NK';
+                        break;
+                }
+
+                return x;
+            }
+        );
+
+        // goodies for servers directly associated with the endpwn project
+        $api.util.wrapAfter(
+            "wc.findCache('getGuild')[0].exports.getGuild",
+
+            x => {
+
+                if (x === undefined) return;
+
+                switch (x.id) {
+                    case '314082522067632130':      // Utopia
+                        x.features.add('VERIFIED');
                         break;
                 }
 
