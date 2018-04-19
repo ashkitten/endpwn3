@@ -31,6 +31,8 @@
 
     // EndPwn3 specific features
     document.addEventListener('ep-ready', () => {
+        
+        window.reload = () => { app.relaunch(); app.exit(); };
 
         // enable experiments
         $api.util.findFuncExports('isDeveloper').__defineGetter__('isDeveloper', () => true);
@@ -38,7 +40,7 @@
         // disable that obnoxious warning about not pasting shit in the console
         $api.util.findFuncExports('consoleWarning').consoleWarning = e => { };
 
-        // goodies for contributors, and also kat bc shes my girlfriend
+        // goodies for people directly associated with the endpwn project, and also kat bc shes my girlfriend
         $api.util.wrapAfter(
             "wc.findCache('getUser')[0].exports.getUser",
 
