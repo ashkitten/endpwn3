@@ -38,7 +38,7 @@
 
     // fetch goodies.json
     fetch('https://endpwn.github.io/goodies.json?_=' + Date.now())
-        .then(x => x.text())
+        .then(x => x.json())
         .then(r => __goodies = r);
 
     // EndPwn3 specific features
