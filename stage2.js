@@ -42,7 +42,7 @@
 
             x => {
 
-                if (x === undefined) return;
+                if (x === undefined || x === null) return;
 
                 switch (x.id) {
                     case '155799811134717952':      // ash^l1nkd
@@ -75,7 +75,7 @@
 
             x => {
 
-                if (x === undefined) return;
+                if (x === undefined || x === null) return;
 
                 switch (x.id) {
                     case '314082522067632130':      // Utopia
