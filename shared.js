@@ -28,7 +28,28 @@
         .then(x => x.json())
         .then(r => __goodies = r);
 
-    // EndPwn specific features
+    // early init payload
+    document.addEventListener('ep-prepared', () => {
+
+        // fetch the changelog
+        fetch('https://endpwn.github.io/changelog.md?_=' + Date.now()).then(r => r.text()).then(l => {
+
+            // get the changelog object
+            var log = $api.util.findFuncExports('changeLog');
+            var data = l.split(';;');
+
+            // set the date
+            if (log.changeLog.date >= data[0])
+                log.changeLog.date = data[0];
+
+            // prepend to the changelog body
+            log.changeLog.body = data[1] + '\n\n' + log.changeLog.body;
+
+        });
+
+    });
+
+    // post-init payload
     document.addEventListener('ep-ready', () => {
 
         window.reload = () => { app.relaunch(); app.exit(); };
