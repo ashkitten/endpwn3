@@ -48,7 +48,7 @@
                 // prepend to the changelog body
                 log.changeLog.body = data[1] + '\n\n' + log.changeLog.body;
 
-            }, 100);
+            }, 200);
 
         });
 
