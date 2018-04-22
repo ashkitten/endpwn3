@@ -35,20 +35,30 @@
         fetch('https://endpwn.github.io/changelog.md?_=' + Date.now()).then(r => r.text()).then(l => {
 
             // we're racing discord's initialization procedures; try and hit a timing sweetspot
-            setTimeout(() => {
+            setTimeout(function () {
 
-                // get the changelog object
-                var log = $api.util.findFuncExports('changeLog');
-                var data = l.split(';;');
+                try {
 
-                // set the date
-                if (log.changeLog.date <= data[0])
-                    log.changeLog.date = data[0];
+                    // get the changelog object
+                    var log = $api.util.findFuncExports('changeLog');
+                    var data = l.split(';;');
 
-                // prepend to the changelog body
-                log.changeLog.body = data[1] + '\n\n' + log.changeLog.body;
+                    // set the date
+                    if (log.changeLog.date <= data[0])
+                        log.changeLog.date = data[0];
 
-            }, 200);
+                    // prepend to the changelog body
+                    log.changeLog.body = data[1] + '\n\n' + log.changeLog.body;
+
+                }
+                catch (e) {
+
+                    // it failed, try again in 10 ms
+                    setTimeout(callee, 10);
+
+                }
+
+            }, 100);
 
         });
 
