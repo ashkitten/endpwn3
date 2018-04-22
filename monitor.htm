@@ -42,7 +42,13 @@
                     });
 
                     function load() {
-                        win.loadURL('https://canary.discordapp.com/channels/@me');
+                        win.loadURL('https://' + (
+                            navigator.userAgent.indexOf('Discord PTB') > -1 ?
+                                'ptb.' :
+                                navigator.userAgent.indexOf('Discord Canary') > -1 ?
+                                    'canary.' :
+                                    ''
+                        ) + 'discordapp.com/channels/@me');
                     }
 
                     // get the data path
