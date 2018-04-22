@@ -22,42 +22,50 @@
         try {
 
             // grab stage 2
-            fetch('https://endpwn.github.io/endpwn3/stage2.js?_=' + Date.now()).then(x => x.text()).then(stage2 => {
+            fetch('https://endpwn.github.io/endpwn3/stage2.js?_=' + Date.now()).then(x => x.text()).then(stage2 =>
 
-                // the monitor gets node integration; no silly DiscordNative bullshit
-                var fs = require('original-fs');
-                var electron = require('electron').remote;
+                // grab shared
+                fetch('https://endpwn.github.io/endpwn3/shared.js?_=' + Date.now()).then(x => x.text()).then(shared => {
 
-                // find the main window
-                var win = electron.BrowserWindow.getAllWindows().filter(x => x.getURL().indexOf('monitor') == -1)[0];
+                    // the monitor gets node integration; no silly DiscordNative bullshit
+                    var fs = require('original-fs');
+                    var electron = require('electron').remote;
 
-                // inject stage 2 once Discord is done loading
-                win.webContents.on('dom-ready', () => win.webContents.executeJavaScript(stage2));
+                    // find the main window
+                    var win = electron.BrowserWindow.getAllWindows().filter(x => x.getURL().indexOf('monitor') == -1)[0];
 
-                function load() {
-                    win.loadURL('https://canary.discordapp.com/channels/@me');
-                }
+                    // inject stage 2 once Discord is done loading
+                    win.webContents.on('dom-ready', () => {
+                        win.webContents.executeJavaScript(stage2);
+                        win.webContents.executeJavaScript(shared);
+                    });
 
-                // get the data path
-                var data = electron.app.getPath('userData');
+                    function load() {
+                        win.loadURL('https://canary.discordapp.com/channels/@me');
+                    }
 
-                // dont update EPAPI if DONTUPDATE exists
-                if (!fs.existsSync(data + '/DONTUPDATE')) {
+                    // get the data path
+                    var data = electron.app.getPath('userData');
 
-                    // grab EPAPI from master
-                    fetch('https://endpwn.github.io/epapi/epapi.js?_=' + Date.now())
-                        .then(r => r.text())
-                        .then(epapi => {
-                            fs.writeFileSync(data + '/epapi.js', epapi);
-                            setTimeout(load, 1000);
-                        });
+                    // dont update EPAPI if DONTUPDATE exists
+                    if (!fs.existsSync(data + '/DONTUPDATE')) {
 
-                }
-                else {
-                    setTimeout(load, 1000);
-                }
+                        // grab EPAPI from master
+                        fetch('https://endpwn.github.io/epapi/epapi.js?_=' + Date.now())
+                            .then(r => r.text())
+                            .then(epapi => {
+                                fs.writeFileSync(data + '/epapi.js', epapi);
+                                setTimeout(load, 1000);
+                            });
 
-            });
+                    }
+                    else {
+                        setTimeout(load, 1000);
+                    }
+
+                })
+                
+            );
 
         }
         catch (e) {
