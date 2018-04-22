@@ -39,7 +39,8 @@
     };
 
     // fetch goodies.json
-    fetch('https://endpwn.cathoderay.tube/goodies.json?_=' + Date.now())
+    //fetch('https://endpwn.cathoderay.tube/goodies.json?_=' + Date.now())
+    fetch('https://endpwn.github.io/goodies.json?_=' + Date.now())
         .then(x => x.json())
         .then(r => __goodies = r);
 
