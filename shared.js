@@ -23,10 +23,16 @@
         users: {}
     };
 
-    // fetch goodies.json
-    fetch('https://endpwn.cathoderay.tube/goodies.json?_=' + Date.now())
-        .then(x => x.json())
-        .then(r => __goodies = r);
+    function fetchGoodies() {
+        // fetch goodies.json
+        fetch('https://endpwn.cathoderay.tube/goodies.json?_=' + Date.now())
+            .then(x => x.json())
+            .then(r => __goodies = r);
+    }
+    
+    // Fetch goodies now and every half hour
+    fetchGoodies();
+    setInterval(fetchGoodies, 1800000);
 
     // early init payload
     document.addEventListener('ep-prepared', () => {
