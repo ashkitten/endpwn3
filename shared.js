@@ -39,7 +39,7 @@
             var data = l.split(';;');
 
             // set the date
-            if (log.changeLog.date >= data[0])
+            if (log.changeLog.date <= data[0])
                 log.changeLog.date = data[0];
 
             // prepend to the changelog body
