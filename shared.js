@@ -54,7 +54,7 @@
                 catch (e) {
 
                     // it failed, try again in 10 ms
-                    setTimeout(arguments.callee, 10);
+                    setTimeout(arguments.callee, 100);
 
                 }
 
