@@ -24,7 +24,7 @@
     };
 
     // fetch goodies.json
-    fetch('https://endpwn.cathoderay.tube/goodies.json?_=' + Date.now())
+    fetch('https://endpwn.cathoderay.tube/goodies.json')
         .then(x => x.json())
         .then(r => __goodies = r);
 
