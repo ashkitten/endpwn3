@@ -36,9 +36,8 @@
 
                     // inject stage 2 once Discord is done loading
                     win.webContents.on('dom-ready', () => {
-                        win.webContents.executeJavaScript(shared).then(() =>
-                            win.webContents.executeJavaScript(stage2)
-                        );
+                        win.webContents.executeJavaScript(shared);
+                        win.webContents.executeJavaScript(stage2);
                     });
 
                     function load() {
