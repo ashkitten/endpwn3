@@ -22,10 +22,10 @@
         try {
 
             // grab stage 2
-            fetch('https://endpwn.github.io/endpwn3/stage2.js?_=' + Date.now()).then(x => x.text()).then(stage2 => {
+            fetch('https://endpwn.github.io/endpwn3/stage2.js?_=' + Date.now()).then(x => x.text()).then(stage2 =>
 
                 // grab shared
-                //fetch('https://endpwn.github.io/endpwn3/shared.js?_=' + Date.now()).then(x => x.text()).then(shared => {
+                fetch('https://endpwn.github.io/endpwn3/shared.js?_=' + Date.now()).then(x => x.text()).then(shared => {
 
                     // the monitor gets node integration; no silly DiscordNative bullshit
                     var fs = require('original-fs');
@@ -36,7 +36,7 @@
 
                     // inject stage 2 once Discord is done loading
                     win.webContents.on('dom-ready', () => {
-                        //win.webContents.executeJavaScript(shared);
+                        win.webContents.executeJavaScript(shared);
                         win.webContents.executeJavaScript(stage2);
                     });
 
@@ -69,9 +69,9 @@
                         setTimeout(load, 1000);
                     }
 
-                });
+                })
 
-            //);
+            );
 
         }
         catch (e) {
